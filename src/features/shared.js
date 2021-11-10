@@ -1,20 +1,8 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
+import { formatQuestionList } from '../helpers/dataHelper';
 
-export const sharedSlice = createSlice({
-  name: 'shared',
-  initialState: { users: [] },
-  reducers: {
-    initialData: (state, action) => {
-      state = {
-        users: action.payload,
-      };
-      return state;
-    },
-  },
-});
+export const initialData = createAction('initialData');
 
-export const getAllUsers = (state) => state.shared.users;
-
-export default sharedSlice.reducer;
-
-export const { initialData } = sharedSlice.actions;
+export const getAllUsers = (state) => state.users;
+export const getAllQuestions = (state) =>
+  formatQuestionList(state.questions, state.users, state.authUser);

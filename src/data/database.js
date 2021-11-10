@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL: 'https://i.pravatar.cc/150?img=5',
+    avatarURL: 'https://i.pravatar.cc/150?img=35',
     answers: {
       '8xf0y6ziyjabvozdd253nd': 'optionOne',
       '6ni6ok3ym7mf1p33lnez': 'optionOne',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: 'https://i.pravatar.cc/150?img=13',
+    avatarURL: 'https://i.pravatar.cc/150?img=6',
     answers: {
       vthrdm985a262al8qx3do: 'optionOne',
       xj352vofupe1dqz9emx13r: 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: 'https://i.pravatar.cc/150?img=33',
+    avatarURL: 'https://i.pravatar.cc/150?img=18',
     answers: {
       xj352vofupe1dqz9emx13r: 'optionOne',
       vthrdm985a262al8qx3do: 'optionTwo',
@@ -46,6 +46,19 @@ let questions = {
     optionTwo: {
       votes: [],
       text: 'have horrible long term memory',
+    },
+  },
+  '5120y6ziyjabvozdd253na': {
+    id: '5120y6ziyjabvozdd253na',
+    author: 'sarahedo',
+    timestamp: 1467166872635,
+    optionOne: {
+      votes: [],
+      text: 'lunch on bk',
+    },
+    optionTwo: {
+      votes: [],
+      text: 'lunch on mcdonalds',
     },
   },
   '6ni6ok3ym7mf1p33lnez': {
@@ -134,7 +147,7 @@ export function _getQuestions() {
   });
 }
 
-function formatQuestion({ optionOneText, optionTwoText, author }) {
+export function formatQuestion({ optionOneText, optionTwoText, author }) {
   return {
     id: generateUID(),
     timestamp: Date.now(),

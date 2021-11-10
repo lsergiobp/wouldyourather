@@ -1,13 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { initialData } from './shared';
 
 export const usersSlice = createSlice({
-  name: 'users',
+  name: 'authUser',
   initialState: [],
   reducers: {},
+  extraReducers: {
+    [initialData]: (state, action) => {
+      state = action.payload.users;
+      return state;
+    },
+  },
 });
 
-export const getAllUsers = (state) => state.users;
-
 export default usersSlice.reducer;
-
-export const { initialData } = usersSlice.actions;
