@@ -17,11 +17,13 @@ import { getAuthUser, logout } from '../../features/authUser';
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
-    marginLeft: '10%',
     display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   logo: {
-    flexGrow: '1',
+    display: 'flex',
+    justifyContent: 'space-between',
   },
   link: {
     textDecoration: 'none',
@@ -40,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonsDiv: {
     display: 'flex',
-    width: '25%',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
@@ -77,15 +78,13 @@ function Navbar() {
   return (
     <AppBar position='static'>
       <CssBaseline />
-      <Toolbar>
-        <Typography variant='h4' className={classes.logo}>
-          Would You Rather
-        </Typography>
+      <Toolbar className={classes.logo}>
+        <Typography variant='h4'>Would You Rather</Typography>
         {authUser && (
           <div className={classes.buttonsDiv}>
             <div className={classes.navlinks}>
               <NavLink
-                to='/Home'
+                to='/home'
                 className={classes.link}
                 activeClassName={classes.selected}
               >

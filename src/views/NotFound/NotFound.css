@@ -1,0 +1,32 @@
+.notfound-main-div {
+  padding-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notfound-paper {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  width: 30%;
+}
+
+.not-found {
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+  color: #b22222;
+}
+
+.notfound-broke {
+  margin-top: 10%;
+  padding-bottom: 5%;
+  text-align: center;
+  font-size: xx-large;
+  font-weight: bold;
+  color: #b22222;
+}

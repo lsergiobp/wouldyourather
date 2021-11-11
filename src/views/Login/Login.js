@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Divider,
   TextField,
@@ -7,11 +7,10 @@ import {
   Autocomplete,
   Avatar,
 } from '@mui/material';
-import { initialData, getAllUsers } from '../../features/shared';
+import { getAllUsers } from '../../features/shared';
 import { login } from '../../features/authUser';
-import { getUsers, getQuestions } from '../../data/service';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import './Login.css';
 
 const Login = () => {
@@ -19,24 +18,16 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userList = useSelector(getAllUsers);
-
-  useEffect(() => {
-    const getInitialData = async () => {
-      let users = await getUsers();
-      let questions = await getQuestions();
-      let dataToDispatch = {
-        users: users,
-        questions: questions,
-      };
-      dispatch(initialData(dataToDispatch));
-    };
-
-    getInitialData();
-  }, [dispatch]);
+  const location = useLocation();
 
   const handleLogin = () => {
     dispatch(login(user));
-    history.push('/home');
+
+    if (!location.state) {
+      history.push('/home');
+    } else {
+      history.push(location.state.prevLocation);
+    }
   };
 
   const handleUser = (user) => {

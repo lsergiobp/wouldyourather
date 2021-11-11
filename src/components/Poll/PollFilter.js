@@ -14,16 +14,13 @@ const PollFilter = () => {
 
   if (question) {
     answered = true;
-  } else if (!question) {
+  } else {
     question = questionList.unanswered.find((q) => q.id === id);
     answered = false;
-  } else {
-    //TODO: return 404 page;
-    console.log('404');
   }
 
   return !question ? (
-    <Redirect to='/' />
+    <Redirect to='/404' />
   ) : (
     <div>
       {!answered ? (

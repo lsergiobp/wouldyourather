@@ -11,11 +11,9 @@ import {
   Radio,
 } from '@mui/material';
 import { emptyQuestion } from '../../helpers/dataHelper';
-import { fetchQuestions, saveNewAnswer } from '../../features/questions';
-import { fetchAuthedUSer, getAuthUser } from '../../features/authUser';
+import { saveNewAnswer } from '../../features/questions';
+import { getAuthUser } from '../../features/authUser';
 import { useDispatch, useSelector } from 'react-redux';
-import { getQuestions, getUsers } from '../../data/service';
-import { fetchUsers } from '../../features/users';
 import { useHistory } from 'react-router-dom';
 import './Poll.css';
 
@@ -41,15 +39,7 @@ const Poll = (props) => {
       authedUser: authUser.id,
     };
 
-    dispatch(saveNewAnswer(answer)).then(async () => {
-      const users = await getUsers();
-      const questions = await getQuestions();
-      dispatch(fetchUsers(users));
-      dispatch(fetchQuestions(questions));
-      dispatch(
-        fetchAuthedUSer(users.find((user) => user.id === answer.authedUser))
-      );
-    });
+    dispatch(saveNewAnswer(answer));
 
     history.push('/home');
   };

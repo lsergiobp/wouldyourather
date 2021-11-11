@@ -1,6 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { initialData } from './shared';
-import { saveAnswer, saveQuestion } from '../data/service';
+import {
+  saveAnswer,
+  saveQuestion,
+  getUsers,
+  getQuestions,
+} from '../data/service';
+import { fetchAuthedUSer } from './authUser';
+import { fetchUsers } from './users';
 
 export const saveNewQuestion = createAsyncThunk(
   'questions/saveNewQuestion',
@@ -14,6 +21,14 @@ export const saveNewAnswer = createAsyncThunk(
   'questions/saveNewAnswer',
   async (answer, thunkAPI) => {
     const newQuestion = await saveAnswer(answer);
+    const users = await getUsers();
+    const questions = await getQuestions();
+    await thunkAPI.dispatch(fetchUsers(users));
+    await thunkAPI.dispatch(fetchQuestions(questions));
+    await thunkAPI.dispatch(
+      fetchAuthedUSer(users.find((user) => user.id === answer.authedUser))
+    );
+
     return newQuestion;
   }
 );
