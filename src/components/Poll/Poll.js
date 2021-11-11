@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import {
   Paper,
   Avatar,
@@ -11,50 +10,54 @@ import {
   FormControlLabel,
   Radio,
 } from '@mui/material';
-import { getAllQuestions } from '../../features/shared';
 import { emptyQuestion } from '../../helpers/dataHelper';
-import { useHistory, Redirect } from 'react-router-dom';
+import { fetchQuestions, saveNewAnswer } from '../../features/questions';
+import { fetchAuthedUSer, getAuthUser } from '../../features/authUser';
+import { useDispatch, useSelector } from 'react-redux';
+import { getQuestions, getUsers } from '../../data/service';
+import { fetchUsers } from '../../features/users';
+import { useHistory } from 'react-router-dom';
 import './Poll.css';
 
 const Poll = (props) => {
   const [opt, setOpt] = React.useState('optionOne');
   const [question, setQuestion] = React.useState(emptyQuestion());
-  const [answered, setAnswered] = React.useState(false);
-  const questionList = useSelector(getAllQuestions);
+  const authUser = useSelector(getAuthUser);
+  const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    let question = questionList.answered.find(
-      (q) => q.id === props.match.params.id
-    );
-    if (question) {
-      setQuestion(question);
-      setAnswered(true);
-    } else if (!question) {
-      let question = questionList.unanswered.find(
-        (q) => q.id === props.match.params.id
-      );
-      setQuestion(question);
-      setAnswered(false);
-    } else {
-      console.log('404');
-    }
-  }, [questionList, props, history]);
+    setQuestion(props.question);
+  }, [props.question]);
 
   const handleChange = (event) => {
     setOpt(event.target.value);
   };
 
-  return !question ? (
-    <Redirect to='/' />
-  ) : (
+  const handleSubmit = () => {
+    const answer = {
+      qid: question.id,
+      answer: opt,
+      authedUser: authUser.id,
+    };
+
+    dispatch(saveNewAnswer(answer)).then(async () => {
+      const users = await getUsers();
+      const questions = await getQuestions();
+      dispatch(fetchUsers(users));
+      dispatch(fetchQuestions(questions));
+      dispatch(
+        fetchAuthedUSer(users.find((user) => user.id === answer.authedUser))
+      );
+    });
+
+    history.push('/home');
+  };
+
+  return (
     <div className='poll-main-div'>
       <Paper elevation={3} className='poll-paper'>
-        <div className='poll-header-div'>
-          {!answered
-            ? `${question.askedBy.name} asks`
-            : `Asked by ${question.askedBy.name}`}
-        </div>
+        <div className='poll-header-div'> {question.askedBy.name} asks:</div>
         <Divider orientation='horizontal' flexItem />
         <Stack
           direction='row'
@@ -64,8 +67,8 @@ const Poll = (props) => {
         >
           <div className='poll-avatar-div'>
             <Avatar className='poll-avatar' src={question.askedBy.avatarURL} />
-            <Divider orientation='vertical' flexItem />
           </div>
+          <Divider orientation='vertical' flexItem />
           <Stack
             className='poll-stack-card'
             direction='column'
@@ -73,9 +76,7 @@ const Poll = (props) => {
             alignItems='stretch'
             spacing={3}
           >
-            <div className='poll-title-div'>
-              {answered ? 'Results:' : 'Would you rather...'}
-            </div>
+            <div className='poll-title-div'>Would you rather...</div>
             <FormControl component='fieldset'>
               <RadioGroup
                 aria-label='gender'
@@ -95,7 +96,12 @@ const Poll = (props) => {
                 />
               </RadioGroup>
             </FormControl>
-            <Button className='poll-button' fullWidth variant='outlined'>
+            <Button
+              className='poll-button'
+              fullWidth
+              variant='outlined'
+              onClick={handleSubmit}
+            >
               Submit
             </Button>
           </Stack>

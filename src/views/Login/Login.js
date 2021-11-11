@@ -1,5 +1,12 @@
 import React, { useEffect } from 'react';
-import { Grid, TextField, Paper, Button, Autocomplete } from '@mui/material';
+import {
+  Divider,
+  TextField,
+  Paper,
+  Button,
+  Autocomplete,
+  Avatar,
+} from '@mui/material';
 import { initialData, getAllUsers } from '../../features/shared';
 import { login } from '../../features/authUser';
 import { getUsers, getQuestions } from '../../data/service';
@@ -38,39 +45,37 @@ const Login = () => {
 
   return (
     <div className='login-div'>
-      <Paper className='login-paper'>
-        <Grid
-          container
-          spacing={5}
-          direction={'column'}
-          justify={'center'}
-          alignItems={'center'}
-        >
-          <Grid item xs={12}>
-            <Autocomplete
-              value={user}
-              onChange={(e, user) => handleUser(user)}
-              disablePortal
-              id='login-user-combo'
-              options={userList}
-              getOptionLabel={(option) => option.name}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label='Select User' />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Button
-              fullWidth
-              variant='contained'
-              disabled={user === null}
-              onClick={handleLogin}
-            >
-              Login
-            </Button>
-          </Grid>
-        </Grid>
+      <Paper elevation={3} className='login-paper'>
+        <div className='login-header-div'>Welcome! Select a user to login.</div>
+        <Divider orientation='horizontal' flexItem />
+        <div className='login-fields'>
+          <Autocomplete
+            value={user}
+            onChange={(e, user) => handleUser(user)}
+            disablePortal
+            id='login-user-combo'
+            options={userList}
+            getOptionLabel={(option) => option.name}
+            renderOption={(props, option) => (
+              <div className='login-option' {...props}>
+                <Avatar src={option.avatarURL} />
+                <div className='login-option-name'>{option.name}</div>
+              </div>
+            )}
+            renderInput={(params) => (
+              <TextField {...params} label='Select User' />
+            )}
+          />
+          <Button
+            fullWidth
+            variant='contained'
+            disabled={user === null}
+            onClick={handleLogin}
+            className='login-button'
+          >
+            Login
+          </Button>
+        </div>
       </Paper>
     </div>
   );

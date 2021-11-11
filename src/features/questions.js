@@ -1,11 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { initialData } from './shared';
-import { saveQuestion } from '../data/service';
+import { saveAnswer, saveQuestion } from '../data/service';
 
 export const saveNewQuestion = createAsyncThunk(
   'questions/saveNewQuestion',
   async (question, thunkAPI) => {
-    const newQuestion = await saveQuestion(question);
+    const newAnswer = await saveQuestion(question);
+    return newAnswer;
+  }
+);
+
+export const saveNewAnswer = createAsyncThunk(
+  'questions/saveNewAnswer',
+  async (answer, thunkAPI) => {
+    const newQuestion = await saveAnswer(answer);
     return newQuestion;
   }
 );
@@ -13,7 +21,12 @@ export const saveNewQuestion = createAsyncThunk(
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState: [],
-  reducers: {},
+  reducers: {
+    fetchQuestions: (state, action) => {
+      state = action.payload;
+      return state;
+    },
+  },
   extraReducers: {
     [initialData]: (state, action) => {
       state = action.payload.questions;
@@ -27,4 +40,4 @@ export const questionsSlice = createSlice({
 
 export default questionsSlice.reducer;
 
-export const { addQuestion } = questionsSlice.actions;
+export const { fetchQuestions } = questionsSlice.actions;

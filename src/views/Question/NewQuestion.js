@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { saveNewQuestion } from '../../features/questions';
 import './NewQuestion.css';
+import { getUsers } from '../../data/service';
+import { fetchUsers } from '../../features/users';
 
 const Root = styled('div')(({ theme }) => ({
   width: '100%',
@@ -37,7 +39,10 @@ const NewQuestion = () => {
       author: author.id,
     };
 
-    dispatch(saveNewQuestion(question));
+    dispatch(saveNewQuestion(question)).then(async () => {
+      const users = await getUsers();
+      dispatch(fetchUsers(users));
+    });
 
     history.push('/home');
   };
@@ -68,7 +73,14 @@ const NewQuestion = () => {
           />
         </div>
 
-        <Button fullWidth variant='contained' onClick={saveQuestion}>
+        <Button
+          fullWidth
+          variant='contained'
+          onClick={saveQuestion}
+          disabled={
+            optOne.replace(/\s/g, '') === '' || optTwo.replace(/\s/g, '') === ''
+          }
+        >
           Submit
         </Button>
       </Paper>

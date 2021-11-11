@@ -29,8 +29,8 @@ const Question = (props) => {
               className='question-avatar'
               src={props.question.askedBy.avatarURL}
             />
-            <Divider orientation='vertical' flexItem />
           </div>
+          <Divider orientation='vertical' flexItem />
           <Stack
             className='question-stack-card'
             direction='column'

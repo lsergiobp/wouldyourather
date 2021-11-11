@@ -1,0 +1,17 @@
+.result-main-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.result-main-vote {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: small;
+  font-weight: bold;
+}
+
+.result-votes-count {
+  text-align: center;
+}

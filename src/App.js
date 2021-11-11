@@ -3,7 +3,8 @@ import Login from './views/Login/Login';
 import Home from './views/Home/Home';
 import Navbar from './components/NavBar/NavBar';
 import NewQuestion from './views/Question/NewQuestion';
-import Poll from './components/Poll/Poll';
+import PollFilter from './components/Poll/PollFilter';
+import Leaderboard from './views/Leaderboard/Leaderboard';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
       <Switch>
         <Route exact path='/' component={Login} />
         <Route path='/home' component={Home} />
-        <Route path='/questions/:id' component={Poll} />
+        <Route path='/questions/:id' component={PollFilter} />
         <Route path='/new' component={NewQuestion} />
+        <Route path='/leaderboard' component={Leaderboard} />
       </Switch>
     </Router>
   );

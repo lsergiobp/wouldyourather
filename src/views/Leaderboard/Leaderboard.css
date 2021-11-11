@@ -1,0 +1,16 @@
+.leaderboard-main-div {
+  padding-top: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.leaderboard-paper {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 1%;
+  width: 30%;
+}
