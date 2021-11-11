@@ -22,8 +22,6 @@ const PollFilter = () => {
     console.log('404');
   }
 
-  console.log(question);
-
   return !question ? (
     <Redirect to='/' />
   ) : (
